@@ -1,0 +1,22 @@
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo">ANDY`S</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            {{#if isHome}}
+            <li class="active"><a href="/">Главная</a></li>
+            {{else}}
+            <li><a href="/">Главная</a></li>
+            {{/if}}
+            {{#if isComponent}}
+            <li class="active"><a href="/component">Components</a></li>
+            {{else}}
+            <li><a href="/component">Components</a></li>
+            {{/if}}
+            {{#if isAdd}}
+            <li class="active"><a href="/add">ADD</a></li>
+            {{else}}
+            <li><a href="/add">ADD</a></li>
+            {{/if}}
+        </ul>
+    </div>
+</nav>
