@@ -5,7 +5,7 @@ const exphbs = require('express-handlebars');
 /*routes begin*/
 const routesHome = require('./routes/home');
 const routesAdd = require('./routes/add');
-const routesComponent = require('./routes/component');
+const routesComponent = require('./routes/curses');
 const routes404 = require('./routes/404');
 /*routes end */
 
@@ -18,7 +18,7 @@ app.use(express.urlencoded({
 
 app.use('/', routesHome);
 app.use('/add', routesAdd);
-app.use('/component', routesComponent);
+app.use('/curses', routesComponent);
 app.use(routes404);
 
 var hbs = exphbs.create({

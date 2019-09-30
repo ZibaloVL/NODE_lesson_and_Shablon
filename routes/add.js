@@ -12,7 +12,7 @@ router.post('/', async (req, res) => {
     console.log(req.body);
     const course = new Course(req.body.title, req.body.price, req.body.image)
     await course.save();
-    res.redirect('/component');
+    res.redirect('/curses');
 })
 
 

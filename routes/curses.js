@@ -4,8 +4,8 @@ const {
 const router = Router();
 
 router.get('/', (req, res) => {
-    res.render('component', {
-        title: "component",
+    res.render('curses', {
+        title: "curses",
         isComponent: true
     });
 })
