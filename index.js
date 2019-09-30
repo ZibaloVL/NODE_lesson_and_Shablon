@@ -12,6 +12,10 @@ const routes404 = require('./routes/404');
 const app = express();
 
 app.use(express.static('public'));
+app.use(express.urlencoded({
+    extended: true
+}));
+
 app.use('/', routesHome);
 app.use('/add', routesAdd);
 app.use('/component', routesComponent);
