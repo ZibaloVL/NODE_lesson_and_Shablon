@@ -49,7 +49,7 @@ class Course {
             )
     }
 
-    getAll() {
+    static getAll() {
         return new Promise((resolve, reject) => {
             fs.readFile(
                 path.join(__dirname, '..', 'data', 'courses.json'),
@@ -63,6 +63,11 @@ class Course {
                 }
             )
         })
+    }
+    static async getById(id) {
+        let courses = await Course.getAll();
+        return courses.find(c => c.id === id);
+
     }
 }
 
