@@ -19,34 +19,25 @@ class Course {
         })
     }
 
-    save() {
-        var courses;
-        this.getAll()
-            .then((data) => {
-                courses = data;
-                courses.push(this.toJSON());
-                console.log('Courses', courses);
-                return new Promise((resolve, reject) => {
-                    fs.writeFile(
-                        path.join(__dirname, '..', 'data', 'courses.json'),
-                        JSON.stringify(courses),
-                        (err) => {
-                            if (err) {
-                                reject(err);
-                            } else {
-                                resolve();
-                            }
-                        }
-
-                    )
-                })
-            })
-
-            .catch(
+    async save() {
+        var courses = await Course.getAll();
+        console.log('courses', courses);
+        courses.push(this.toJSON());
+        console.log('Courses', courses);
+        return new Promise((resolve, reject) => {
+            fs.writeFile(
+                path.join(__dirname, '..', 'data', 'courses.json'),
+                JSON.stringify(courses),
                 (err) => {
-                    console.log(err);
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve();
+                    }
                 }
+
             )
+        })
     }
 
     static getAll() {
