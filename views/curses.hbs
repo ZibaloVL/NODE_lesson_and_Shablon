@@ -12,9 +12,13 @@
                 <span class="card-title">{{title}}</span>
                 <p class="price">{{price}}</p>
             </div>
-            <div class="card-action">
+            <div class="card-action actions">
                 <a href="/curses/{{id}}" target="_blank">ПОДРОБНЕЕ</a>
                 <a href="/curses/{{id}}/edit?allow=true">РЕДАКТИРОВАТЬ</a>
+                <form action="card/add" method="POST">
+                    <button type="submit" class="btn btn-primary">Купить</button>
+                    <input type="hidden" name="id" value="id">
+                </form>
             </div>
         </div>
     </div>
