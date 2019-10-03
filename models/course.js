@@ -20,7 +20,7 @@ class Course {
     }
 
     static async update(course) {
-        const courses = await Course.getAll();
+        const courses = Course.getAll();
 
         const idx = courses.findIndex(c => c.id = course.id);
         courses[idx] = course;
@@ -78,6 +78,7 @@ class Course {
     }
     static async getById(id) {
         let courses = await Course.getAll();
+        console.log('courses', courses);
         return courses.find(c => c.id === id);
 
     }
