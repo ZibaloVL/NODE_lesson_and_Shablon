@@ -1,0 +1,22 @@
+<h1>Редактировать курс</h1>
+<form action="/curses/edit" method="POST">
+    <div class="input-field">
+        <input id="title" name="title" type="text" class="validate" value="{{curse.title}}" required>
+        <label for="title">Name food</label>
+        <span class="helper-text" data-error="Enter name"></span>
+    </div>
+    <div class="input-field">
+        <input id="price" name="price" type="text" class="validate" value="{{curse.price}}" required>
+        <label for="price">Price</label>
+        <span class="helper-text" data-error="Enter price"></span>
+    </div>
+    <div class="input-field">
+        <input id="image" name="image" type="text" class="validate" value="{{curse.image}}" required>
+        <label for="image">Image food</label>
+        <span class="helper-text" data-error="Enter image"></span>
+    </div>
+    <input type="hidden" name="id" value="" {{curse.id}}"">
+    <button class="btn waves-effect waves-light" type="submit" name="action">
+        Редактировать
+    </button>
+</form>

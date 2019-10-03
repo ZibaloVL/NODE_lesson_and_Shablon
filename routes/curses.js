@@ -19,7 +19,20 @@ router.get('/:id/edit',
         if (!req.query.allow) {
             return res.redirect('/')
         }
-    })
+        const curse = await Course.getById(req.params.id);
+        res.render('curse-edit', {
+            title: `редактируем курс ${curse.title}`,
+            curse
+        })
+    }
+)
+
+router.post('/edit', async (req, res) => {
+    console.log('curses/edit');
+    await Course.update(req.body);
+    res.redirect('/curse')
+})
+
 
 router.get('/:id', async (req, res) => {
     // console.log('req.params.id  ', req.params.id);
@@ -30,6 +43,7 @@ router.get('/:id', async (req, res) => {
         courseOne
     })
 })
+
 
 
 
