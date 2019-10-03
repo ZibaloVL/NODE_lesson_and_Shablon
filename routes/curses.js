@@ -40,6 +40,7 @@ router.get('/:id', async (req, res) => {
     const courseOne = await Course.getById(req.params.id);
     // console.log('courseOne', courseOne);
     res.render('course', {
+        layout: 'empty',
         title: `Курс ${courseOne.title}`,
         courseOne
     })
