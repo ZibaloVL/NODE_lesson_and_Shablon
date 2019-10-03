@@ -20,9 +20,10 @@ class Course {
     }
 
     static async update(course) {
-        const courses = Course.getAll();
-
-        const idx = courses.findIndex(c => c.id = course.id);
+        const courses = await Course.getAll();
+        //    console.log("courses", courses);
+        //    console.log('course.id', course.id);
+        const idx = courses.findIndex(c => c.id === course.id);
         courses[idx] = course;
         return new Promise((resolve, reject) => {
             fs.writeFile(
@@ -78,7 +79,7 @@ class Course {
     }
     static async getById(id) {
         let courses = await Course.getAll();
-        console.log('courses', courses);
+        //    console.log('courses', courses);
         return courses.find(c => c.id === id);
 
     }

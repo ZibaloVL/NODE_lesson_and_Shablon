@@ -28,16 +28,17 @@ router.get('/:id/edit',
 )
 
 router.post('/edit', async (req, res) => {
-    console.log('curses/edit');
+    //    console.log('curses/edit');
+    // console.log('req.body', req.body);
     await Course.update(req.body);
-    res.redirect('/curse')
+    res.redirect('/curses')
 })
 
 
 router.get('/:id', async (req, res) => {
-    console.log('req.params.id  ', req.params.id);
+    // console.log('req.params.id  ', req.params.id);
     const courseOne = await Course.getById(req.params.id);
-    console.log('courseOne', courseOne);
+    // console.log('courseOne', courseOne);
     res.render('course', {
         title: `Курс ${courseOne.title}`,
         courseOne
