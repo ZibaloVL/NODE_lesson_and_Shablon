@@ -59,6 +59,7 @@ class Card {
         console.log('card__', card);
         const idx = card.courses.findIndex(c => c.id === id);
         const curse = card.courses[idx];
+        card.price -= card.courses[idx].price;
         if (curse.count === 1) {
             //remove
             card.courses = card.courses.filter(c => c.id !== id)
@@ -66,7 +67,7 @@ class Card {
             //change
             card.courses[idx].count--;
         }
-        card.price -= card.courses[idx].price;
+
 
         return new Promise((resolve, reject) => {
             fs.writeFile(p, JSON.stringify(card), (err) => {
