@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose')
 const path = require('path');
 const exphbs = require('express-handlebars');
 
@@ -37,9 +38,25 @@ app.set('views', 'views')
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-    console.log(`server start on port ${PORT}`);
-})
+async function start() {
+    try {
+        const url = 'mongodb+srv://slava_zibalo:g5t9SVz9kK1EjxVy@cluster0-fjqra.mongodb.net/admin?retryWrites=true&w=majority';
+        await mongoose.connect(url, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
+        app.listen(PORT, () => {
+            console.log(`server start on port ${PORT}`);
+        })
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+start();
+
+
 /* connect monco db*/
 // const parolMongoDB = 'g5t9SVz9kK1EjxVy'; user: slava_zibalo
 const url = 'mongodb+srv://slava_zibalo:g5t9SVz9kK1EjxVy@cluster0-fjqra.mongodb.net/admin?retryWrites=true&w=majority'
