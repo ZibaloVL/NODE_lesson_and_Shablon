@@ -40,3 +40,6 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`server start on port ${PORT}`);
 })
+/* connect monco db*/
+// const parolMongoDB = 'g5t9SVz9kK1EjxVy'; user: slava_zibalo
+const url = 'mongodb+srv://slava_zibalo:g5t9SVz9kK1EjxVy@cluster0-fjqra.mongodb.net/admin?retryWrites=true&w=majority'
