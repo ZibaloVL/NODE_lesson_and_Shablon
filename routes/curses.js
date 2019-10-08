@@ -38,6 +38,19 @@ router.post('/edit', async (req, res) => {
     res.redirect('/curses')
 })
 
+router.post('/remove', async (req, res) => {
+    try {
+        await Course.deleteOne({
+            _id: req.body.id
+        });
+        res.redirect('/curses');
+    } catch (error) {
+        console.log("не удалиkось");
+        console.log(err);
+    }
+
+})
+
 
 router.get('/:id', async (req, res) => {
     // console.log('req.params.id  ', req.params.id);
@@ -49,6 +62,7 @@ router.get('/:id', async (req, res) => {
         courseOne
     })
 })
+
 
 
 
