@@ -6,7 +6,7 @@ const router = Router();
 // const course = new Course(); // в референсе не создаётся новый обьект
 
 router.get('/', async (req, res) => {
-    const courses = await Course.getAll();
+    const courses = await Course.find();
     res.render('curses', {
         title: "curses",
         isComponent: true,
@@ -19,7 +19,7 @@ router.get('/:id/edit',
         if (!req.query.allow) {
             return res.redirect('/')
         }
-        const curse = await Course.getById(req.params.id);
+        const curse = await Course.findById(req.params.id);
         res.render('curse-edit', {
             title: `редактируем курс ${curse.title}`,
             curse
@@ -30,14 +30,18 @@ router.get('/:id/edit',
 router.post('/edit', async (req, res) => {
     //    console.log('curses/edit');
     // console.log('req.body', req.body);
-    await Course.update(req.body);
+    const {
+        id
+    } = req.body.id;
+    delete req.body.id
+    await Course.updateOne(id, req.body);
     res.redirect('/curses')
 })
 
 
 router.get('/:id', async (req, res) => {
     // console.log('req.params.id  ', req.params.id);
-    const courseOne = await Course.getById(req.params.id);
+    const courseOne = await Course.findById(req.params.id);
     // console.log('courseOne', courseOne);
     res.render('course', {
         layout: 'empty',

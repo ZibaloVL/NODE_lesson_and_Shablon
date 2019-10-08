@@ -1,88 +1,18 @@
-const uuid = require('uuid/v4');
-const fs = require('fs');
-const path = require('path');
+const {
+    Schema,
+    model
+} = require('mongoose')
 
-class Course {
-    constructor(title, price, image) {
-        this.title = title;
-        this.price = price;
-        this.image = image;
-        this.id = uuid();
-    }
+const course = new Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    price: {
+        type: Number,
+        required: true
+    },
+    image: String
+})
 
-    toJSON() {
-        return ({
-            title: this.title,
-            price: this.price,
-            image: this.image,
-            id: this.id
-        })
-    }
-
-    static async update(course) {
-        const courses = await Course.getAll();
-        //    console.log("courses", courses);
-        //    console.log('course.id', course.id);
-        const idx = courses.findIndex(c => c.id === course.id);
-        courses[idx] = course;
-        return new Promise((resolve, reject) => {
-            fs.writeFile(
-                path.join(__dirname, '..', 'data', 'courses.json'),
-                JSON.stringify(courses),
-                (err) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        resolve();
-                    }
-                }
-
-            )
-        })
-    }
-
-    async save() {
-        var courses = await Course.getAll();
-        console.log('courses', courses);
-        courses.push(this.toJSON());
-        console.log('Courses', courses);
-        return new Promise((resolve, reject) => {
-            fs.writeFile(
-                path.join(__dirname, '..', 'data', 'courses.json'),
-                JSON.stringify(courses),
-                (err) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        resolve();
-                    }
-                }
-
-            )
-        })
-    }
-
-    static getAll() {
-        return new Promise((resolve, reject) => {
-            fs.readFile(
-                path.join(__dirname, '..', 'data', 'courses.json'),
-                'utf-8',
-                (err, content) => {
-                    if (err) {
-                        reject(err)
-                    } else {
-                        resolve(JSON.parse(content))
-                    }
-                }
-            )
-        })
-    }
-    static async getById(id) {
-        let courses = await Course.getAll();
-        //    console.log('courses', courses);
-        return courses.find(c => c.id === id);
-
-    }
-}
-
-module.exports = Course
+module.exports = model('Course', course)
