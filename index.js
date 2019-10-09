@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose')
 const path = require('path');
 const exphbs = require('express-handlebars');
-const MongoClient = require('mongodb').MongoClient;
+const User = require('./models/user');
 
 
 /*routes begin*/
@@ -14,6 +14,27 @@ const routesCard = require('./routes/card');
 /*routes end */
 
 const app = express();
+// Register `hbs.engine` with the Express app.
+const hbs = exphbs.create({
+    /* config */
+    defaultLayout: 'main',
+    extname: 'hbs'
+});
+app.engine('hbs', hbs.engine);
+app.set('view engine', 'hbs');
+app.set('views', 'views');
+
+app.use(async (req, res, next) => {
+    try {
+        const user = await User.findById('5d9c8f0822388d08a851f5b5');
+        req.user = user;
+        //console.log('rreq.user', req.user);
+        next();
+    } catch (error) {
+        console.log(' нет авториизации')
+        console.log(error);
+    }
+})
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({
@@ -26,46 +47,28 @@ app.use('/curses', routesComponent);
 app.use('/card', routesCard);
 app.use(routes404);
 
-var hbs = exphbs.create({
-    /* config */
-    defaultLayout: 'main',
-    extname: 'hbs'
-});
-
-// Register `hbs.engine` with the Express app.
-app.engine('hbs', hbs.engine);
-app.set('view engine', 'hbs');
-app.set('views', 'views')
 
 const PORT = process.env.PORT || 3000;
 
-//uNWYUFS7l0kBvJPd
-/*
-const uri = "mongodb+srv://fotoroom:uNWYUFS7l0kBvJPd@nodeshoplearn-fif3b.gcp.mongodb.net/admin?retryWrites=true&w=majority";
-const client = new MongoClient(uri, {
-    useNewUrlParser: true
-});
 
-
-client.connect(err => {
-    const collection = client.db("test").collection("devices");
-    // perform actions on the collection object
-    app.listen(PORT, () => {
-        console.log(`server start on port ${PORT}`);
-    })
-    client.close();
-});
-
-*/
-//lcROiGz73NlNKrSW
 async function start() {
     try {
         const url = `mongodb+srv://fotoroom:lcROiGz73NlNKrSW@nodeshoplearn-fif3b.gcp.mongodb.net/shop`
-        // const url = `mongodb+srv://fotoroom:lcROiGz73NlNKrS@nodeshoplearn-fif3b.gcp.mongodb.net/admin?retryWrites=true&w=majority`
         await mongoose.connect(url, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
+        const candidate = await User.findOne();
+        if (!candidate) {
+            const user = new User({
+                email: 'fotoroom.md@gmail.com',
+                name: 'Zibalo',
+                cart: {
+                    items: []
+                }
+            })
+            await user.save();
+        }
         app.listen(PORT, () => {
             console.log(`server start on port ${PORT}`);
         })
