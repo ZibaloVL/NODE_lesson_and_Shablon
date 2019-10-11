@@ -4,6 +4,22 @@ const {
 const Course = require('../models/course');
 const router = Router();
 
+function mapCartItems(cart) {
+    return cart.items.map(c => ({
+        ...c.courseId._doc,
+        id: c.courseId.id,
+        count: c.count
+    }))
+}
+
+function calckPrice(courses) {
+    let price = 0;
+    courses.forEach(element => {
+        price = price + element.count * element.price;
+    });
+    return price;
+}
+
 router.post('/add', async (req, res) => {
     //    console.log("req.body.id", req.body.id);
     //    console.log('req.user');
@@ -15,33 +31,12 @@ router.post('/add', async (req, res) => {
 })
 
 router.get('/', async (req, res) => {
-    /*    
-        const card = await Card.fetch();
-        res.render('card', {
-            title: 'корзина',
-            courses: card.courses,
-            price: card.price
-        })
-    */
+
     const user = await req.user
         .populate('cart.items.courseId')
         .execPopulate();
     //    console.log("user.cart.items", user);
 
-    function mapCartItems(cart) {
-        return cart.items.map(c => ({
-            ...c.courseId._doc,
-            count: c.count
-        }))
-    }
-
-    function calckPrice(courses) {
-        let price = 0;
-        courses.forEach(element => {
-            price = price + element.count * element.price;
-        });
-        return price;
-    }
     const courses = mapCartItems(user.cart);
     // console.log("course", courses);
     res.render('card', {
@@ -53,9 +48,17 @@ router.get('/', async (req, res) => {
 })
 
 router.delete('/remove/:id', async (req, res) => {
-    console.log("req.params.id", req.params.id);
-    card = await Card.remove(req.params.id);
-    res.status(200).json(card)
+    await req.user.removeFromCart(req.params.id);
+    const user = await req.user
+        .populate('cart.items.courseId')
+        .execPopulate();
+    console.log("user.cart.items", user);
+    const courses = mapCartItems(user.cart);
+    const cart = {
+        courses,
+        price: calckPrice(courses)
+    }
+    res.status(200).json(cart)
 })
 
 module.exports = router;
