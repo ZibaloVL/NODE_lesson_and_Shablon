@@ -33,8 +33,8 @@ userSchema.methods.addTocart = function (course) {
     const idx = cloneItems.findIndex(c => {
         return c.courseId.toString() === course._id.toString()
     })
-    console.log('course__', course);
-    console.log('idx', idx);
+    // console.log('course__', course);
+    // console.log('idx', idx);
     if (idx >= 0) {
         cloneItems[idx].count++;
     } else {
