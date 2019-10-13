@@ -8,21 +8,23 @@ const router = Router();
 router.get('/', async (req, res) => {
     try {
         const orders = await Order.find({
-                'user.userid': req.user._id
+                'user.userId': req.user._id
             })
-            .populate('userId')
-
+            .populate('user.userId')
+        // console.log("orders", orders);
+        const sendOrder = orders.map(o => {
+            return {
+                ...o._doc,
+                price: o.courses.reduce((total, c) => {
+                    return total += c.count * c.course.price
+                }, 0)
+            }
+        });
+        console.log("sendOrder", sendOrder);
         res.render('orders', {
             isOrder: true,
             title: "заказы",
-            orders: orders.map(o => {
-                return {
-                    ...o._doc,
-                    price: o.courses.reduce((total, c) => {
-                        return total += c.count * c.course.price
-                    }, 0)
-                }
-            })
+            orders: sendOrder
         })
     } catch (error) {
         console.log(error);
