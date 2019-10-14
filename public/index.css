@@ -28,3 +28,7 @@
     justify-content: space-between;
     align-items: center;
 }
+
+.auth{
+    padding-top: 2rem;
+}
