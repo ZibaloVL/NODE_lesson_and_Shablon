@@ -27,19 +27,7 @@ const hbs = exphbs.create({
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', 'views');
-/*
-app.use(async (req, res, next) => {
-    try {
-        const user = await User.findById('5d9c8f0822388d08a851f5b5');
-        req.user = user;
-        //console.log('rreq.user', req.user);
-        next();
-    } catch (error) {
-        console.log(' нет авториизации')
-        console.log(error);
-    }
-})
-*/
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({
     extended: true
@@ -70,19 +58,6 @@ async function start() {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
-        /*
-        const candidate = await User.findOne();
-        if (!candidate) {
-            const user = new User({
-                email: 'fotoroom.md@gmail.com',
-                name: 'Zibalo',
-                cart: {
-                    items: []
-                }
-            })
-            await user.save();
-        }
-        */
         app.listen(PORT, () => {
             console.log(`server start on port ${PORT}`);
         })
