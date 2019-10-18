@@ -31,11 +31,11 @@ router.post('/add', async (req, res) => {
 })
 
 router.get('/', async (req, res) => {
-
+    console.log('router card user', req.user);
     const user = await req.user
         .populate('cart.items.courseId')
         .execPopulate();
-    //    console.log("user.cart.items", user);
+    console.log("user.cart.items", user);
 
     const courses = mapCartItems(user.cart);
     // console.log("course", courses);

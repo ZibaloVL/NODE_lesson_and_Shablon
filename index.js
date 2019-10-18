@@ -3,9 +3,11 @@ const mongoose = require('mongoose')
 const path = require('path');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
+const MongoStore = require('connect-mongodb-session')(session);
 const User = require('./models/user');
 const varMiddleware = require('./middleware/variables');
 
+const MONGODB_URI = `mongodb+srv://fotoroom:lcROiGz73NlNKrSW@nodeshoplearn-fif3b.gcp.mongodb.net/shop`;
 
 /*routes begin*/
 const routesHome = require('./routes/home');
@@ -24,6 +26,11 @@ const hbs = exphbs.create({
     defaultLayout: 'main',
     extname: 'hbs'
 });
+
+const store = new MongoStore({
+    collection: 'session',
+    uri: MONGODB_URI
+})
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', 'views');
@@ -35,7 +42,8 @@ app.use(express.urlencoded({
 app.use(session({ //data in request.session 
     secret: 'some secret value', // line whith secret word
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    store: store
 }));
 app.use(varMiddleware);
 
@@ -53,8 +61,8 @@ const PORT = process.env.PORT || 3000;
 
 async function start() {
     try {
-        const url = `mongodb+srv://fotoroom:lcROiGz73NlNKrSW@nodeshoplearn-fif3b.gcp.mongodb.net/shop`
-        await mongoose.connect(url, {
+        
+        await mongoose.connect(MONGODB_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
