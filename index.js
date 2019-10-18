@@ -6,7 +6,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongodb-session')(session);
 const User = require('./models/user');
 const varMiddleware = require('./middleware/variables');
-
+const userMiddlware = require('./middleware/user');
 const MONGODB_URI = `mongodb+srv://fotoroom:lcROiGz73NlNKrSW@nodeshoplearn-fif3b.gcp.mongodb.net/shop`;
 
 /*routes begin*/
@@ -46,6 +46,7 @@ app.use(session({ //data in request.session
     store: store
 }));
 app.use(varMiddleware);
+app.use(userMiddlware);
 
 app.use('/', routesHome);
 app.use('/add', routesAdd);
@@ -61,7 +62,7 @@ const PORT = process.env.PORT || 3000;
 
 async function start() {
     try {
-        
+
         await mongoose.connect(MONGODB_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true

@@ -1,3 +1,5 @@
+const auth = require('../middleware/auth');
+
 const {
     Router
 } = require('express');
@@ -17,7 +19,7 @@ router.get('/', async (req, res) => {
     });
 })
 
-router.get('/:id/edit',
+router.get('/:id/edit', auth,
     async (req, res) => {
         if (!req.query.allow) {
             return res.redirect('/')
@@ -30,7 +32,7 @@ router.get('/:id/edit',
     }
 )
 
-router.post('/edit', async (req, res) => {
+router.post('/edit', auth, async (req, res) => {
     //    console.log('curses/edit');
     // console.log('req.body', req.body);
     const {
@@ -41,7 +43,7 @@ router.post('/edit', async (req, res) => {
     res.redirect('/curses')
 })
 
-router.post('/remove', async (req, res) => {
+router.post('/remove', auth, async (req, res) => {
     try {
         await Course.deleteOne({
             _id: req.body.id
@@ -55,7 +57,7 @@ router.post('/remove', async (req, res) => {
 })
 
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', auth, async (req, res) => {
     // console.log('req.params.id  ', req.params.id);
     const courseOne = await Course.findById(req.params.id);
     // console.log('courseOne', courseOne);
