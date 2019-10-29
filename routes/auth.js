@@ -8,7 +8,9 @@ router = Router();
 router.get('/login', async (req, res) => {
     res.render('auth/login', {
         title: 'авторизация',
-        isLogin: true
+        isLogin: true,
+        loginError: req.flash('loginError'),
+        registrError: req.flash('registrError')
     })
 })
 
@@ -28,6 +30,7 @@ router.post('/login', async (req, res) => {
             email
         })
         if (candidate) {
+
             const areSame = await bcrypt.compare(password, candidate.password);
             if (areSame) {
                 const user = candidate;
@@ -43,9 +46,11 @@ router.post('/login', async (req, res) => {
                 console.log('req.session', req.session);
 
             } else {
+                req.flash('loginError', 'Parol error')
                 res.redirect('/auth/login#login');
             }
         } else {
+            req.flash('loginError', 'User not found');
             console.log('/auth/login#login');
             res.redirect('/auth/login#login');
         }
@@ -70,6 +75,7 @@ router.post('/register', async (req, res) => {
 
         if (candidate) {
             // console.log('/auth/login#register');
+            req.flash('registrError', 'Dublicate user');
             res.redirect('/auth/login#register');
         } else {
             const hashPassword = await bcrypt.hash(password, 10);

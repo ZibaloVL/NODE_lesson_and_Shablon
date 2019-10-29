@@ -29,6 +29,11 @@
     align-items: center;
 }
 
-.auth{
+.auth {
     padding-top: 2rem;
+}
+
+.alert {
+    padding: .5rem 1rem;
+    border-radius: 10px;
 }

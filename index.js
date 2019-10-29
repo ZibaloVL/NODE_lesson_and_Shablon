@@ -1,11 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose')
 const path = require('path');
-const csrf = require('csurf')
+const csrf = require('csurf');
+const flash = require('connect-flash');
 const exphbs = require('express-handlebars');
 const session = require('express-session');
 const MongoStore = require('connect-mongodb-session')(session);
-const User = require('./models/user');
+// const User = require('./models/user');
 const varMiddleware = require('./middleware/variables');
 const userMiddlware = require('./middleware/user');
 const MONGODB_URI = `mongodb+srv://fotoroom:lcROiGz73NlNKrSW@nodeshoplearn-fif3b.gcp.mongodb.net/shop`;
@@ -47,6 +48,7 @@ app.use(session({ //data in request.session
     store: store
 }));
 app.use(csrf());
+app.use(flash());
 app.use(varMiddleware);
 app.use(userMiddlware);
 
