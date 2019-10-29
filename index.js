@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose')
 const path = require('path');
+const csrf = require('csurf')
 const exphbs = require('express-handlebars');
 const session = require('express-session');
 const MongoStore = require('connect-mongodb-session')(session);
@@ -45,6 +46,7 @@ app.use(session({ //data in request.session
     saveUninitialized: false,
     store: store
 }));
+app.use(csrf());
 app.use(varMiddleware);
 app.use(userMiddlware);
 

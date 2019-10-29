@@ -3,38 +3,38 @@
         <a href="#" class="brand-logo"> ANDYS </a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             {{#if isHome}}
-                <li class="active"><a href="/">Главная</a></li>
+            <li class="active"><a href="/">Главная</a></li>
             {{else}}
-                <li><a href="/">Главная</a></li>
+            <li><a href="/">Главная</a></li>
             {{/if}}
             {{#if isComponent}}
-                <li class="active"><a href="/curses">Curses</a></li>
+            <li class="active"><a href="/curses">Curses</a></li>
             {{else}}
-                <li><a href="/curses">Curses</a></li>
+            <li><a href="/curses">Curses</a></li>
             {{/if}}
             {{#if isAuth}}
-                {{#if isAdd}}
-                    <li class="active"><a href="/add">Добавить курс</a></li>
-                {{else}}
-                    <li><a href="/add">Добавить курс</a></li>
-                {{/if}}
-                {{#if Card}}
-                    <li class="active"><a href="/card">Корзина</a></li>
-                {{else}}
-                    <li><a href="/card">Корзина</a></li>
-                {{/if}}
-                {{#if isOrder}}
-                    <li class="active"><a href="/orders">Заказы</a></li>
-                {{else}}
-                    <li><a href="/orders">Заказы</a></li>
-            {{/if}}
-                <li><a href="/auth/logout">Выйти</a></li>
+            {{#if isAdd}}
+            <li class="active"><a href="/add">Добавить курс</a></li>
             {{else}}
-                {{#if isLogin}}
-                    <li class="active"><a href="/auth/login#login">Войти</a></li>
-                {{else}}
-                    <li><a href="/auth/login">Войти</a></li>
-                {{/if}}
+            <li><a href="/add">Добавить курс</a></li>
+            {{/if}}
+            {{#if Card}}
+            <li class="active"><a href="/card">Корзина</a></li>
+            {{else}}
+            <li><a href="/card">Корзина</a></li>
+            {{/if}}
+            {{#if isOrder}}
+            <li class="active"><a href="/orders">Заказы</a></li>
+            {{else}}
+            <li><a href="/orders">Заказы</a></li>
+            {{/if}}
+            <li><a href="/auth/logout">Выйти</a></li>
+            {{else}}
+            {{#if isLogin}}
+            <li class="active"><a href="/auth/login#login">Войти</a></li>
+            {{else}}
+            <li><a href="/auth/login">Войти</a></li>
+            {{/if}}
             {{/if}}
         </ul>
     </div>
