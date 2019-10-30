@@ -2,8 +2,18 @@ const {
     Router
 } = require('express');
 const bcrypt = require('bcryptjs'); //methods for shifring
+const nodemailer = require('nodemailer');
+const sendgrid = require('nodemailer-sendgrid-transport');
 const User = require('../models/user');
+const regEmail = require('../email/registration.js')
+const keys = require('../keys/index.js');
 router = Router();
+
+const transporter = nodemailer.createTransport(sendgrid({
+    auth:{
+        api_key: keys.SENDGRID_API_KEY
+    }
+}));
 
 router.get('/login', async (req, res) => {
     res.render('auth/login', {
@@ -90,6 +100,7 @@ router.post('/register', async (req, res) => {
             await user.save();
             // console.log('/auth/login#login');
             res.redirect('/auth/login#login');
+            await transporter.sendMail(regEmail(email))  // send email registration
         }
 
     } catch (error) {

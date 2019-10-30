@@ -20,6 +20,8 @@
     "express-handlebars": "^3.1.0",
     "express-session": "^1.17.0",
     "mongoose": "^5.7.3",
+    "nodemailer": "^6.3.1",
+    "nodemailer-sendgrid-transport": "^0.2.0",
     "nodemon": "^1.19.2",
     "socket.io": "^2.3.0",
     "uuid": "^3.3.3"
