@@ -97,10 +97,15 @@ router.post('/register', async (req, res) => {
                     'items': []
                 }
             });
-            await user.save();
-            // console.log('/auth/login#login');
-            res.redirect('/auth/login#login');
-            await transporter.sendMail(regEmail(email))  // send email registration
+            try {
+                await user.save();
+                await transporter.sendMail(regEmail(email))  // send email registration
+                console.log('/auth/login#login')
+                // res.redirect('/auth/login#login');    
+            } catch (error) {
+                console.log('error', error);
+            }
+            
         }
 
     } catch (error) {
