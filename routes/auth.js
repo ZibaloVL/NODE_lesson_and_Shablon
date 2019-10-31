@@ -176,4 +176,27 @@ router.get('password/:token', async (req, res) => {
 
 })
 
+router.post('password', async (req, res) => {
+    try {
+        const user = await User.findOne({
+            _id: req.body.userId,
+            resetToken: req.body.token,
+            resetTokenExp: {
+                $gt: Date.now()
+            }
+        })
+        if (user) {
+            user.password = await bcrypt(req.body.password, 10)
+            user.resetToken = undefined;
+            user.resetTokenExp = undefined;
+            await user.save();
+        } else {
+            req.flash('loginError', "Время жизни токена истекло");
+            res.redirect('/auth/login');
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
+})
 module.exports = router;
