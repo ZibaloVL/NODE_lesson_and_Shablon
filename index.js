@@ -9,6 +9,7 @@ const MongoStore = require('connect-mongodb-session')(session);
 // const User = require('./models/user');
 const varMiddleware = require('./middleware/variables');
 const userMiddlware = require('./middleware/user');
+const fileMidlware = require('./middleware/file');
 const keys = require('./keys/index');
 
 /*routes begin*/
@@ -49,6 +50,7 @@ app.use(session({ //data in request.session
     saveUninitialized: false,
     store: store
 }));
+app.use(fileMidlware.single('avatar'));
 app.use(csrf());
 app.use(flash());
 app.use(varMiddleware);
