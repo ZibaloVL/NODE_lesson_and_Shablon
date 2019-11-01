@@ -8,15 +8,22 @@ const router = Router();
 // const course = new Course(); // в референсе не создаётся новый обьект
 
 router.get('/', async (req, res) => {
-    const courses = await Course.find();
+    try {
+        const courses = await Course.find()
+            .populate('userId', 'email name')
+            .select('price title image')
 
-    // console.log("courses", courses);
+        res.render('curses', {
+            title: "Курсы",
+            isComponent: true,
+            userId: req.user ? req.user._id.toString() : null,
+            courses // так предаётся переменная
+        });
+    } catch (error) {
+        console.log(error);
+    }
 
-    res.render('curses', {
-        title: "curses",
-        isComponent: true,
-        courses // так предаётся переменная
-    });
+
 })
 
 router.get('/:id/edit', auth,
@@ -24,11 +31,21 @@ router.get('/:id/edit', auth,
         if (!req.query.allow) {
             return res.redirect('/')
         }
-        const curse = await Course.findById(req.params.id);
-        res.render('curse-edit', {
-            title: `редактируем курс ${curse.title}`,
-            curse
-        })
+        try {
+            const curse = await Course.findById(req.params.id);
+
+            if (curse.userId.toString() !== req.user._id.toString()) {
+                return res.redirect('/courses')
+            }
+
+            res.render('curse-edit', {
+                title: `редактируем курс ${curse.title}`,
+                curse
+            })
+        } catch (error) {
+            console.log(error)
+        }
+
     }
 )
 

@@ -16,7 +16,11 @@
                 <a href="/curses/{{id}}" target="_blank">ПОДРОБНЕЕ</a>
                 {{#if @root.isAuth}}
                 <!-- enter of cicle and up in global param -->
+                {{#ifeq userId._id @root.useId}}
+
                 <a href="/curses/{{id}}/edit?allow=true">РЕДАКТИРОВАТЬ</a>
+
+                {{/ifeq}}
                 <form action="card/add" method="POST">
                     <button type="submit" class="btn btn-primary">Купить</button>
                     <!--add token -->
