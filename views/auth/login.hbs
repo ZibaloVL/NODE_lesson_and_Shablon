@@ -36,7 +36,7 @@
             <p class="alert">{{registrError}}</p>
             {{/if}}
             <h1>РЕГИСТРАЦИЯ</h1>
-            <form action="/auth/register" method="post">
+            <form action="/auth/register" method="post" novalidate>
                 <div class="input-field">
                     <input id="remail" name="email" type="text" class="validate" required>
                     <label for="remail">email</label>
@@ -48,7 +48,7 @@
                     <span class="helper-text" data-error="Enter parol"></span>
                 </div>
                 <div class="input-field">
-                    <input id="confirm" name="repeat" type="text" class="validate" required>
+                    <input id="confirm" name="confirm" type="text" class="validate" required>
                     <label for="confirm">Parol</label>
                     <span class="helper-text" data-error="Repiad parol"></span>
                 </div>

@@ -6,7 +6,7 @@ const crypto = require('crypto');
 const {
     body,
     validationResult
-} = require('express-validator/check');
+} = require('express-validator');
 const nodemailer = require('nodemailer');
 const sendgrid = require('nodemailer-sendgrid-transport');
 const User = require('../models/user');
@@ -75,7 +75,7 @@ router.post('/login', async (req, res) => {
     }
 })
 
-router.post('/register', body('email').isEmail(), async (req, res) => {
+router.post('/register', body('email').isEmail().withMessage('not correct email'), async (req, res) => {
     try {
         console.log('req.body', req.body);
         const {
@@ -85,14 +85,15 @@ router.post('/register', body('email').isEmail(), async (req, res) => {
             name
         } = req.body;
 
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            req.flash('registrError', errors.array()[0].msg)
+            return res.status(422).redirect('/auth/login#register')
+        }
+
         const candidate = await User.findOne({
             email
         });
-        const errors = validationResult(req);
-        if (errors.isEmpty()) {
-            req.flash('registerErrors', errors.array()[0].msg)
-            return res.status(422).redirect('/auth/login#register')
-        }
 
         if (candidate) {
             // console.log('/auth/login#register');
