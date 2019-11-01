@@ -19,6 +19,7 @@ const routes404 = require('./routes/404');
 const routesCard = require('./routes/card');
 const routesOrders = require('./routes/orders');
 const authRoutes = require('./routes/auth');
+const profileRoutes = require('./routes/profile');
 /*routes end */
 
 const app = express();
@@ -59,6 +60,7 @@ app.use('/curses', routesComponent);
 app.use('/card', routesCard);
 app.use('/orders', routesOrders);
 app.use('/auth', authRoutes);
+app.use('/profile', profileRoutes);
 app.use(routes404);
 
 

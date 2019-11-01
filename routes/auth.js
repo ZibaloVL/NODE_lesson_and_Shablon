@@ -77,7 +77,7 @@ router.post('/login', async (req, res) => {
 
 router.post('/register', body('email').isEmail().withMessage('not correct email'), async (req, res) => {
     try {
-        console.log('req.body', req.body);
+        //  console.log('req.body', req.body);
         const {
             email,
             password,
