@@ -1,1 +1,35 @@
 <h1>Профиль</h1>
+
+<div class="row">
+    <div class="col s6">
+        <img class="avatar" src="https://i.pinimg.com/280x280_RS/69/73/2b/69732bf536a4f4512674009286291c20.jpg"
+            alt="no img">
+        <p>No avatar</p>
+    </div>
+    <div class="col s6">
+        <form action="/profile" method="POST">
+            <p>Ваш email:<strong>{{user.email}}</strong></p>
+            <div class="input-field">
+                <input id="name" name="title" type="text" class="validate" value={{user.name}} required>
+                <label for="name">Имя</label>
+                <span class="helper-text" data-error="Введите имя"></span>
+            </div>
+            <div class="file-field input-field">
+                <div class="btn">
+                    <span>Аватар</span>
+                    <input type="file" name="avatar">
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                </div>
+            </div>
+            <!--add token -->
+            <input type="hidden" name="_csrf" value="{{csrf}}">
+            <!--end token-->
+            <button class="btn" type="submit" name="action">
+                Изменить
+            </button>
+        </form>
+    </div>
+
+</div>
